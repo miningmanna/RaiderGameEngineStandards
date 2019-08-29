@@ -26,8 +26,11 @@ public class FolderInputGen implements InputGen {
 	@Override
 	public InputStream getInput(String path) {
 		System.out.println("Trying to get: " + path);
+		File f = new File(folder, path);
+		if(!f.exists())
+			return null;
 		try {
-			return new FileInputStream(new File(folder, path));
+			return new FileInputStream(f);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
