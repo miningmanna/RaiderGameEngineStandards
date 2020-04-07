@@ -11,20 +11,36 @@ public class FolderInputGen implements InputGen {
 	public static final String INPUTGEN_TYPE = "dir";
 	
 	File folder;
+	boolean valid;
 	
 	@Override
-	public void init(String path) {
+	public boolean init(String path) {
 		
-		if(path == null)
-			return;
+		if(path == null) {
+			valid = false;
+			return false;
+		}
 		
 		folder = new File(path);
+		if(folder.isFile()) {
+			valid = false;
+			return false;
+		}
 		System.out.println("Initiating FolderInputGen at: " + folder.getAbsolutePath());
 		
+		valid = true;
+		return true;
+	}
+	
+	@Override
+	public boolean isDead() {
+		return !valid;
 	}
 	
 	@Override
 	public InputStream getInput(String path) {
+		if(!valid)
+			return null;
 		System.out.println("Trying to get: " + path);
 		File f = new File(folder, path);
 		if(!f.exists())
