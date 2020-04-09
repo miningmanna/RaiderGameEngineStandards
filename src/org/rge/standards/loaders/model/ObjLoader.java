@@ -108,7 +108,6 @@ public class ObjLoader implements Loader {
 			verts.rawVerts[i] = vertsRawList.get(i);
 		
 		RawData res = new RawData();
-		res.shaderName = "default";
 		res.verts = new Verts[] { verts };
 		
 		res.rawInds = new int[indsRawList.size()];

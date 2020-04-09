@@ -49,7 +49,6 @@ public class LWOLoader implements Loader {
 			return null;
 		
 		RawData res = new RawData();
-		res.shaderName = "lwo";
 		
 		int[] tempInds  = new int[data.iv.length];
 		int[] tempPolEdgeCounts = new int[data.ipolsurf.length];

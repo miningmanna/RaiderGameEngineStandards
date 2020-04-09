@@ -53,7 +53,6 @@ public class LDRLoader implements Loader {
 		surf.isTranslucent = false;
 		data.surfaces = new RawSurface[] { surf };
 		data.verts = new Verts[3];
-		data.shaderName = "color";
 		
 		Verts v = new Verts();
 		v.dimension = 3;
