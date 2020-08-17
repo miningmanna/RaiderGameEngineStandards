@@ -6,9 +6,9 @@ import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
 import org.rge.assets.AssetManager;
 import org.rge.assets.Loader;
-import org.rge.lua.compat.Matrix4;
 import org.rge.node.Move;
 import org.rge.standards.loaders.animation.LwsFileData.ObjectKeyFrames;
+import org.rge.lua.compat.Matrix4;
 
 public class LWSLoader implements Loader {
 	
