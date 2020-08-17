@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
-import org.rge.lua.compat.Matrix4;
 
 public class LwsFileData {
 	
@@ -62,6 +61,8 @@ public class LwsFileData {
 			if(line.startsWith("AddNullObject") || line.startsWith("LoadObject")) {
 				lobjects++;
 				
+				boolean isNull = line.startsWith("AddNullObject");
+				
 				line = line.substring(line.indexOf(' ')+1);
 				line = line.replace('\\', '/');
 				line = line.substring(line.lastIndexOf('/')+1);
@@ -73,9 +74,12 @@ public class LwsFileData {
 				
 				_nodeNames.add(line + index);
 				
-				if(line.startsWith("AddNullObject")) {
+				if(isNull) {
 					_objFiles.add(null);
+					System.out.println("ADD NULL OBJECT: " + _nodeNames.getLast());
 				} else {
+					System.out.println("LINE: " + line);
+					System.out.println("LOAD OBJECT: " + _nodeNames.getLast());
 					_objFiles.add(line);
 				}
 				
@@ -346,7 +350,7 @@ public class LwsFileData {
 		
 		public void genTransforms() {
 			for(int i = 0; i < lframes; i++) {
-				Matrix4f m = new Matrix4().identity();
+				Matrix4f m = new Matrix4f().identity();
 				
 				Quaternionf rot = new Quaternionf();
 				rot.rotateYXZ(relRot[i].y, relRot[i].x, relRot[i].z);
@@ -355,9 +359,9 @@ public class LwsFileData {
 //				m.origin(new Vector3f(0));
 				
 				m.scaleAround(scales[i].x, scales[i].y, scales[i].z, pivot.x, pivot.y, pivot.z);
-				m._m30(relPos[i].x);
-				m._m31(relPos[i].y);
-				m._m32(relPos[i].z);
+				m._m30(relPos[i].x - (pivot.x * scales[i].x));
+				m._m31(relPos[i].y - (pivot.y * scales[i].y));
+				m._m32(relPos[i].z - (pivot.z * scales[i].z));
 				
 				transforms[i] = m;
 			}
